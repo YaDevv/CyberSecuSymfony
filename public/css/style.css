@@ -1,0 +1,189 @@
+:root {
+    --bleu-fonce: #172554;
+    --bleu: #2563eb;
+    --fond: #f5f7fa;
+    --bordure: #dbe1e8;
+    --texte: #1e293b;
+    --gris: #64748b;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--fond);
+    color: var(--texte);
+    font-family: Arial, sans-serif;
+}
+
+/* Page d'inscription */
+
+.page-inscription {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+}
+
+.inscription-card {
+    width: 100%;
+    max-width: 700px;
+
+    background-color: white;
+
+    border: 1px solid var(--bordure);
+    border-radius: 10px;
+
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+}
+
+/* En-tête */
+
+.inscription-header {
+    padding: 30px 40px 20px;
+
+    border-bottom: 1px solid var(--bordure);
+}
+
+.projet-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 20px;
+
+    color: var(--bleu-fonce);
+
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.projet-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 6px;
+
+    color: white;
+    background-color: var(--bleu);
+}
+
+.inscription-title {
+    margin: 0 0 6px;
+
+    color: var(--texte);
+
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.inscription-description {
+    margin: 0;
+
+    color: var(--gris);
+
+    font-size: 14px;
+}
+
+/* Formulaire */
+
+.inscription-form {
+    padding: 30px 40px 35px;
+}
+
+.inscription-form label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--texte);
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.inscription-form .form-control {
+    min-height: 44px;
+
+    border: 1px solid var(--bordure);
+    border-radius: 6px;
+
+    box-shadow: none;
+}
+
+.inscription-form .form-control:focus {
+    border-color: var(--bleu);
+
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+}
+
+/* Espacement des champs */
+
+.champ {
+    margin-bottom: 20px;
+}
+
+/* Bouton */
+
+.bouton-inscription {
+    width: 100%;
+
+    min-height: 45px;
+
+    margin-top: 5px;
+
+    border: none;
+    border-radius: 6px;
+
+    color: white;
+    background-color: var(--bleu);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: background-color 0.2s;
+}
+
+.bouton-inscription:hover {
+    color: white;
+    background-color: #1d4ed8;
+}
+
+/* Informations de sécurité */
+
+.info-securite {
+    margin-top: 20px;
+
+    color: var(--gris);
+
+    font-size: 13px;
+
+    text-align: center;
+}
+
+/* Responsive */
+
+@media (max-width: 576px) {
+
+    .page-inscription {
+        padding: 20px 15px;
+    }
+
+    .inscription-header {
+        padding: 25px 20px 20px;
+    }
+
+    .inscription-form {
+        padding: 25px 20px 30px;
+    }
+
+    .inscription-title {
+        font-size: 24px;
+    }
+}
