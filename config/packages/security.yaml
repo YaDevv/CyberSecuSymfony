@@ -21,6 +21,22 @@ security:
             lazy: true
             provider: app_user_provider
 
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                enable_csrf: true
+                default_target_path: app_password
+
+            logout:
+                path: app_logout
+                target: app_login
+
+            # Protection contre la force brute : 5 échecs / 15 min
+            # (par couple email + IP, avec une limite globale par IP)
+            login_throttling:
+                max_attempts: 5
+                interval: '15 minutes'
+
             # Activate different ways to authenticate:
             # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -29,8 +45,8 @@ security:
 
     # Note: Only the *first* matching rule is applied
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/password, roles: ROLE_USER }
 
 when@test:
     security:

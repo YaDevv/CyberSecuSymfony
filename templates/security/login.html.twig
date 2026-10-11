@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion - Gestion des accès{% endblock %}
+
+{% block body %}
+
+	<div class="page-inscription">
+
+		<div class="inscription-card">
+
+			<div class="inscription-header">
+
+				<div class="projet-title">
+					<span class="projet-icon">S</span>
+					Gestion des accès
+				</div>
+
+				<h1 class="inscription-title">Connexion</h1>
+
+				<p class="inscription-description">
+					Saisissez vos identifiants pour accéder à votre compte.
+				</p>
+
+			</div>
+
+			<div class="inscription-form">
+
+				{% for message in app.flashes('success') %}
+					<div class="alert alert-success">{{ message }}</div>
+				{% endfor %}
+
+				{% if error %}
+					<div class="alert alert-danger">
+						{{ error.messageKey|trans(error.messageData, 'security') }}
+					</div>
+				{% endif %}
+
+				<form method="post" action="{{ path('app_login') }}">
+
+					<div class="mb-3">
+						<label for="username">Email</label>
+						<input type="email" id="username" name="_username" value="{{ last_username }}" class="form-control" autocomplete="email" required autofocus>
+					</div>
+
+					<div class="mb-3">
+						<label for="password">Mot de passe</label>
+						<input type="password" id="password" name="_password" class="form-control" autocomplete="current-password" required>
+					</div>
+
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+					<button type="submit" class="bouton-inscription">Se connecter</button>
+
+				</form>
+
+				<div class="info-securite">
+					Pas encore de compte ? <a href="{{ path('app_register') }}">Créer un compte</a>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+{% endblock %}
