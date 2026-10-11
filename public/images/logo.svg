@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Gestion des accès">
+  <rect width="64" height="64" rx="14" fill="#2563eb"/>
+  <path d="M32 11 14 18v13c0 11.5 7.6 20.2 18 23 10.4-2.8 18-11.5 18-23V18L32 11Z" fill="#ffffff"/>
+  <circle cx="32" cy="29" r="5" fill="#2563eb"/>
+  <path d="M30 32h4l1.5 11h-7L30 32Z" fill="#2563eb"/>
+</svg>
