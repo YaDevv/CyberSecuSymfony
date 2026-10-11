@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accès refusé - Gestion des accès{% endblock %}
+
+{% block body %}
+
+	<div class="container py-5 text-center">
+
+		<p class="display-1 fw-bold text-danger mb-0">403</p>
+		<h1 class="h3 mb-3">Accès refusé</h1>
+
+		<p class="text-muted mb-4">
+			Vous n'avez pas les droits nécessaires pour accéder à cette page.
+			Si vous pensez qu'il s'agit d'une erreur, contactez un administrateur.
+		</p>
+
+		<a href="{{ path('app_home') }}" class="btn btn-primary">Retour à l'accueil</a>
+
+	</div>
+
+{% endblock %}

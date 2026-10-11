@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur {{ status_code }} - Gestion des accès{% endblock %}
+
+{% block body %}
+
+	<div class="container py-5 text-center">
+
+		<p class="display-1 fw-bold text-primary mb-0">{{ status_code }}</p>
+		<h1 class="h3 mb-3">Une erreur est survenue</h1>
+
+		<p class="text-muted mb-4">
+			Le serveur n'a pas pu traiter votre demande. Réessayez dans un instant ou revenez à l'accueil.
+		</p>
+
+		<a href="{{ path('app_home') }}" class="btn btn-primary">Retour à l'accueil</a>
+
+	</div>
+
+{% endblock %}
