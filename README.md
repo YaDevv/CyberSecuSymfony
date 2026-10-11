@@ -24,7 +24,7 @@ gestion des mots de passe, administration des comptes et historique des connexio
 
 - PHP 8.2 ou plus, avec les extensions habituelles de Symfony
 - Composer
-- Une base de données (MySQL / MariaDB ou PostgreSQL)
+- Une base de données **MySQL ou MariaDB** (les migrations fournies sont générées pour MySQL/MariaDB)
 
 ## Installation
 
@@ -47,8 +47,8 @@ Pour générer un `APP_SECRET` :
 php -r "echo bin2hex(random_bytes(16));"
 ```
 
-Exemple PostgreSQL pour `DATABASE_URL` :
-`postgresql://utilisateur:motdepasse@127.0.0.1:5432/nom_base?serverVersion=16&charset=utf8`
+> Pour utiliser un autre SGBD (PostgreSQL par exemple), changez `DATABASE_URL`, supprimez le dossier
+> `migrations/` et régénérez les migrations avec `php bin/console make:migration`.
 
 Puis créez la base et les tables :
 
@@ -68,7 +68,7 @@ promouvez votre compte directement en base :
 UPDATE user SET roles = '["ROLE_ADMIN"]' WHERE email = 'votre-email@exemple.fr';
 ```
 
-(avec PostgreSQL, écrivez `"user"` entre guillemets doubles). Déconnectez-vous puis reconnectez-vous.
+Déconnectez-vous puis reconnectez-vous.
 
 ## Routes principales
 
