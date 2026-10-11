@@ -31,7 +31,14 @@
 
 				{% if error %}
 					<div class="alert alert-danger">
-						{{ error.messageKey|trans(error.messageData, 'security') }}
+						{% set key = error.messageKey %}
+						{% if key == 'Invalid credentials.' %}
+							Email ou mot de passe incorrect.
+						{% elseif key starts with 'Too many failed login attempts' %}
+							Trop de tentatives de connexion échouées. Réessayez dans {{ error.messageData['%minutes%'] ?? 15 }} minute(s).
+						{% else %}
+							{{ key|trans(error.messageData, 'security') }}
+						{% endif %}
 					</div>
 				{% endif %}
 
