@@ -14,7 +14,7 @@ final class SecurityController extends AbstractController
     {
         // Un utilisateur déjà connecté n'a rien à faire sur la page de connexion
         if ($this->getUser()) {
-            return $this->redirectToRoute('app_password');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('security/login.html.twig', [

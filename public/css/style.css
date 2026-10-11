@@ -18,7 +18,7 @@ body {
 /* Page d'inscription */
 
 .page-inscription {
-    min-height: 100vh;
+    min-height: calc(100vh - 56px);
 
     display: flex;
     justify-content: center;
