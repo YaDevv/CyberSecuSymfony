@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\PasswordHistory;
 use App\Entity\User;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,11 +29,12 @@ class RegistrationController extends AbstractController
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
 
-            $user->setPassword(
-                $passwordHasher->hashPassword($user, $plainPassword)
-            );
+            $hash = $passwordHasher->hashPassword($user, $plainPassword);
+            $user->setPassword($hash);
 
             $entityManager->persist($user);
+            // Le premier mot de passe entre aussi dans l'historique
+            $entityManager->persist(new PasswordHistory($user, $hash));
             $entityManager->flush();
 
             $this->addFlash('success', 'Votre compte a bien été créé. Vous pouvez vous connecter.');

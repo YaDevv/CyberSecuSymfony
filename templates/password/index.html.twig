@@ -1,20 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PasswordController!{% endblock %}
+{% block title %}Changer mon mot de passe - Gestion des accès{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	<div class="page-inscription">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/var/www/html/CyberSecurite/src/Controller/PasswordController.php</code></li>
-        <li>Your template at <code>/var/www/html/CyberSecurite/templates/password/index.html.twig</code></li>
-    </ul>
-</div>
+		<div class="inscription-card">
+
+			<div class="inscription-header">
+
+				<div class="projet-title">
+					<span class="projet-icon">S</span>
+					Gestion des accès
+				</div>
+
+				<h1 class="inscription-title">Changer mon mot de passe</h1>
+
+				<p class="inscription-description">
+					Connecté en tant que {{ app.user.userIdentifier }}.
+					Vous ne pouvez pas réutiliser vos derniers mots de passe.
+				</p>
+
+			</div>
+
+			<div class="inscription-form">
+
+				{% for message in app.flashes('success') %}
+					<div class="alert alert-success">{{ message }}</div>
+				{% endfor %}
+
+				{{ form_start(passwordForm) }}
+
+				{{ form_row(passwordForm.currentPassword) }}
+				{{ form_row(passwordForm.plainPassword.first) }}
+				{{ form_row(passwordForm.plainPassword.second) }}
+
+				<button type="submit" class="bouton-inscription">
+					Modifier mon mot de passe
+				</button>
+
+				{{ form_end(passwordForm) }}
+
+				<div class="info-securite">
+					<a href="{{ path('app_logout') }}">Se déconnecter</a>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
 {% endblock %}
