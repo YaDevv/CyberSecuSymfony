@@ -21,6 +21,9 @@ security:
             lazy: true
             provider: app_user_provider
 
+            # Refuse la connexion d'un compte suspendu
+            user_checker: App\Security\UserChecker
+
             form_login:
                 login_path: app_login
                 check_path: app_login

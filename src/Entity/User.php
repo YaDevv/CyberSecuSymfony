@@ -69,6 +69,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $codePostal = null;
 
+    #[ORM\Column(options: ['default' => false])]
+    private bool $isSuspended = false;
+
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: 'La ville est obligatoire.')]
     #[Assert\Length(min: 2, max: 50)]
@@ -215,6 +218,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVille(string $ville): static
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function isSuspended(): bool
+    {
+        return $this->isSuspended;
+    }
+
+    public function setIsSuspended(bool $isSuspended): static
+    {
+        $this->isSuspended = $isSuspended;
 
         return $this;
     }
