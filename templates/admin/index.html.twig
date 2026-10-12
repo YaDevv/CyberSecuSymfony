@@ -37,7 +37,12 @@
 						{% set history = logins[user.id] ?? [] %}
 						<tr>
 							<td>{{ user.prenom }} {{ user.nom }}</td>
-							<td>{{ user.email }}</td>
+							<td>
+								{{ user.email }}
+								{% if user.id == app.user.id %}
+									<span class="badge bg-info text-dark ms-1">Vous</span>
+								{% endif %}
+							</td>
 							<td>{{ user.roles|join(', ') }}</td>
 							<td>
 								{% if user.suspended %}
@@ -63,17 +68,20 @@
 							<td class="text-end text-nowrap">
 								<a href="{{ path('app_admin_user_edit', {id: user.id}) }}" class="btn btn-sm btn-outline-primary">Modifier</a>
 
-								<form method="post" action="{{ path('app_admin_user_suspend', {id: user.id}) }}" class="d-inline">
-									<input type="hidden" name="_token" value="{{ csrf_token('suspend' ~ user.id) }}">
-									<button type="submit" class="btn btn-sm btn-outline-warning">
-										{{ user.suspended ? 'Réactiver' : 'Suspendre' }}
-									</button>
-								</form>
+								{# Un administrateur ne peut pas se suspendre ni se supprimer lui-même #}
+								{% if user.id != app.user.id %}
+									<form method="post" action="{{ path('app_admin_user_suspend', {id: user.id}) }}" class="d-inline">
+										<input type="hidden" name="_token" value="{{ csrf_token('suspend' ~ user.id) }}">
+										<button type="submit" class="btn btn-sm btn-outline-warning">
+											{{ user.suspended ? 'Réactiver' : 'Suspendre' }}
+										</button>
+									</form>
 
-								<form method="post" action="{{ path('app_admin_user_delete', {id: user.id}) }}" class="d-inline" onsubmit="return confirm('Supprimer définitivement cet utilisateur ?');">
-									<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-									<button type="submit" class="btn btn-sm btn-outline-danger">Supprimer</button>
-								</form>
+									<form method="post" action="{{ path('app_admin_user_delete', {id: user.id}) }}" class="d-inline" onsubmit="return confirm('Supprimer définitivement cet utilisateur ?');">
+										<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+										<button type="submit" class="btn btn-sm btn-outline-danger">Supprimer</button>
+									</form>
+								{% endif %}
 							</td>
 						</tr>
 					{% else %}

@@ -2,6 +2,10 @@ twig:
     file_name_pattern: '*.twig'
     form_themes: ['bootstrap_5_layout.html.twig']
 
+    # Les dates sont stockées en UTC et affichées à l'heure de Paris (heure d'été/hiver gérée)
+    date:
+        timezone: Europe/Paris
+
 when@test:
     twig:
         strict_variables: true
