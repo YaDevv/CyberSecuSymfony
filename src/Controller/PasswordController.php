@@ -60,7 +60,7 @@ final class PasswordController extends AbstractController
 
             $this->addFlash('success', 'Votre mot de passe a bien été modifié.');
 
-            return $this->redirectToRoute('app_password');
+            return $this->redirectToRoute('app_profile');
         }
 
         return $this->render('password/index.html.twig', ['passwordForm' => $form]);
