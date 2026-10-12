@@ -43,7 +43,14 @@
 									<span class="badge bg-info text-dark ms-1">Vous</span>
 								{% endif %}
 							</td>
-							<td>{{ user.roles|join(', ') }}</td>
+							<td>
+								{# Un administrateur a aussi ROLE_USER en interne : on n'affiche que le rôle le plus élevé #}
+								{% if 'ROLE_ADMIN' in user.roles %}
+									Administrateur
+								{% else %}
+									Utilisateur
+								{% endif %}
+							</td>
 							<td>
 								{% if user.suspended %}
 									<span class="badge bg-danger">Suspendu</span>
