@@ -1,0 +1,52 @@
+name: Déploiement sur le serveur de test
+
+# À chaque push sur main (ou à la demande), met à jour le site du serveur de test.
+# S'exécute sur le runner auto-hébergé installé sur ce serveur.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Jeton fourni automatiquement par GitHub, en lecture seule : rien à stocker sur le serveur.
+permissions:
+  contents: read
+
+# Un seul déploiement à la fois
+concurrency:
+  group: deploy-test
+  cancel-in-progress: false
+
+env:
+  # Dossier du projet sur le serveur de test (à adapter si le projet est réutilisé ailleurs)
+  DEPLOY_PATH: /var/www/html/CyberSecurite
+  # Adresse locale du site, pour vérifier qu'il répond après le déploiement
+  HEALTH_URL: http://localhost/CyberSecurite/connexion
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    timeout-minutes: 15
+    steps:
+      - name: Récupérer la dernière version de main
+        working-directory: ${{ env.DEPLOY_PATH }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          AUTH="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
+          git -c "http.https://github.com/.extraheader=$AUTH" fetch --prune origin main
+          git reset --hard origin/main
+
+      - name: Installer les dépendances
+        working-directory: ${{ env.DEPLOY_PATH }}
+        run: composer install --no-dev --optimize-autoloader --no-interaction
+
+      - name: Mettre à jour la base de données
+        working-directory: ${{ env.DEPLOY_PATH }}
+        run: php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+
+      - name: Vider le cache
+        working-directory: ${{ env.DEPLOY_PATH }}
+        run: php bin/console cache:clear
+
+      - name: Vérifier que le site répond
+        run: curl --fail --silent --show-error --output /dev/null "$HEALTH_URL"
