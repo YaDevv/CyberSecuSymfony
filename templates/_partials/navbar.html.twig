@@ -36,7 +36,7 @@
 			<ul class="navbar-nav align-items-md-center">
 				{% if is_granted('ROLE_USER') %}
 					<li class="nav-item">
-						<span class="nav-link" style="cursor: default;">{{ app.user.userIdentifier }}</span>
+						<a class="nav-link" href="{{ path('app_profile') }}">{{ app.user.prenom }} {{ app.user.nom }}</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
