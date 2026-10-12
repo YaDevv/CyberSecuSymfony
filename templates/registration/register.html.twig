@@ -58,6 +58,11 @@
 				{{ form_row(registrationForm.plainPassword.first) }}
 				{{ form_row(registrationForm.plainPassword.second) }}
 
+				<div class="form-check mb-3">
+					<input type="checkbox" class="form-check-input" id="show-password" data-toggle-password="#{{ registrationForm.plainPassword.first.vars.id }}, #{{ registrationForm.plainPassword.second.vars.id }}">
+					<label class="form-check-label" for="show-password">Afficher les mots de passe</label>
+				</div>
+
 				<button type="submit" class="bouton-inscription">
 					Créer mon compte
 				</button>
