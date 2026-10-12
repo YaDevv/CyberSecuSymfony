@@ -52,6 +52,10 @@
 					<div class="mb-3">
 						<label for="password">Mot de passe</label>
 						<input type="password" id="password" name="_password" class="form-control" autocomplete="current-password" required>
+							<div class="form-check mt-2">
+								<input type="checkbox" class="form-check-input" id="show-password" data-toggle-password="#password">
+								<label class="form-check-label" for="show-password">Afficher le mot de passe</label>
+							</div>
 					</div>
 
 					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
