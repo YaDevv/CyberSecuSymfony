@@ -99,3 +99,36 @@ Déconnectez-vous puis reconnectez-vous.
    (`HISTORY_SIZE` dans `PasswordController`).
 4. Ajustez le seuil anti force brute dans `login_throttling` (`security.yaml`).
 5. Ajoutez vos propres routes et protégez-les avec `access_control` ou `#[IsGranted(...)]`.
+
+## Déploiement automatique (serveur de test)
+
+À chaque modification de la branche `main`, une GitHub Action met à jour le serveur de test :
+récupération du code, `composer install`, migrations, `cache:clear`, puis vérification que le site
+répond. Elle est décrite dans `.github/workflows/deploy.yml` et s'exécute sur un runner auto-hébergé
+installé sur le serveur de test.
+
+- Travaillez sur une branche, ouvrez une pull request, puis fusionnez dans `main` : le déploiement
+  se lance seul.
+- Le suivi se fait dans l'onglet **Actions** du dépôt (pastille verte = succès).
+- Aucun secret n'est stocké dans le dépôt : l'Action utilise le jeton `GITHUB_TOKEN` fourni par
+  GitHub, en lecture seule.
+- Le fichier `.env.local` du serveur n'est jamais modifié par le déploiement.
+
+## Sécurité du serveur web
+
+Le serveur web ne doit publier que le dossier `public/`. Sinon `.env.local`, `.git` ou `config/`
+seraient téléchargeables. Exemple de configuration Apache (`/etc/apache2/conf-available/`) :
+
+```apache
+Alias /NomDuProjet /var/www/html/NomDuProjet/public
+<Directory /var/www/html/NomDuProjet/public>
+    Options -Indexes +FollowSymLinks
+    AllowOverride All
+    Require all granted
+</Directory>
+```
+
+Vérifiez ensuite que ces adresses répondent `404` : `/.env.local`, `/.git/HEAD`, `/composer.json`.
+
+| `/` | Page d'accueil (boutons selon le rôle) | Public |
+| `/profil` | Informations du compte et accès au changement de mot de passe | Utilisateur connecté |
