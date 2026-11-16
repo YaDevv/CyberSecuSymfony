@@ -1,0 +1,63 @@
+name: Tests
+
+# À chaque Pull Request vers main, lance les tests automatisés dans un environnement
+# temporaire (machine GitHub + base de données jetable), détruit à la fin du job.
+# Il ne touche NI au cloud de développement, NI au serveur de test, NI à leurs bases.
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# Si on pousse un nouveau commit sur la PR, l'ancien lancement devient inutile
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    # Machine fournie par GitHub (pas le runner auto-hébergé du serveur de test)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    # Base de données temporaire dédiée aux tests
+    services:
+      mariadb:
+        image: mariadb:10.11
+        env:
+          MARIADB_ROOT_PASSWORD: root-temporaire-ci
+          MARIADB_DATABASE: dbCyberSecu_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+      APP_ENV: test
+      # Le suffixe "_test" est ajouté automatiquement par Doctrine en environnement test
+      DATABASE_URL: "mysql://root:root-temporaire-ci@127.0.0.1:3306/dbCyberSecu?serverVersion=10.11.0-MariaDB&charset=utf8mb4"
+
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Préparer PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: ctype, iconv, intl, mbstring, pdo_mysql
+          coverage: none
+          tools: composer:v2
+
+      - name: Installer les dépendances
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Préparer la base de données de test
+        run: php bin/console doctrine:database:create --if-not-exists --no-interaction
+
+      - name: Lancer les tests
+        run: vendor/bin/phpunit --testdox
