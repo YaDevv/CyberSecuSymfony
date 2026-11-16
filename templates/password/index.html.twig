@@ -36,6 +36,11 @@
 				{{ form_row(passwordForm.plainPassword.first) }}
 				{{ form_row(passwordForm.plainPassword.second) }}
 
+				<div class="form-check mb-3">
+					<input type="checkbox" class="form-check-input" id="show-password" data-toggle-password="#{{ passwordForm.currentPassword.vars.id }}, #{{ passwordForm.plainPassword.first.vars.id }}, #{{ passwordForm.plainPassword.second.vars.id }}">
+					<label class="form-check-label" for="show-password">Afficher les mots de passe</label>
+				</div>
+
 				<button type="submit" class="bouton-inscription">
 					Modifier mon mot de passe
 				</button>
