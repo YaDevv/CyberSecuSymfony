@@ -39,7 +39,7 @@ final class PasswordController extends AbstractController
             $newPassword = $form->get('plainPassword')->getData();
 
             // Mot de passe actuel + HISTORY_SIZE précédents
-            $previousHashes = [];
+            $previousHashes = $historyRepository->findLastHashes($user, self::HISTORY_SIZE);
             $previousHashes[] = (string) $user->getPassword();
 
             foreach ($previousHashes as $oldHash) {
