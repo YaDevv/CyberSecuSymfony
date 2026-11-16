@@ -8,4 +8,6 @@ framework:
 when@test:
     framework:
         validation:
-            not_compromised_password: false
+            # Vérification activée aussi en test : elle utilise le faux service
+            # App\Tests\Support\FauxServiceMotsDePasseFuites (voir framework.yaml), pas Internet.
+            not_compromised_password: true

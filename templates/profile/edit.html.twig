@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mon profil - Gestion des accès{% endblock %}
+
+{% block body %}
+
+	<div class="page-inscription">
+
+		<div class="inscription-card">
+
+			<div class="inscription-header">
+
+				<div class="projet-title">
+					<img src="{{ asset('images/logo.svg') }}" alt="" width="28" height="28">
+					Gestion des accès
+				</div>
+
+				<h1 class="inscription-title">Modifier mon profil</h1>
+
+				<p class="inscription-description">Connecté en tant que {{ app.user.userIdentifier }}.</p>
+
+			</div>
+
+			<div class="inscription-form">
+
+				{{ form_start(form) }}
+
+				{{ form_widget(form) }}
+
+				<button type="submit" class="btn btn-primary">Enregistrer</button>
+				<a href="{{ path('app_profile') }}" class="btn btn-link">Annuler</a>
+
+				{{ form_end(form) }}
+
+			</div>
+
+		</div>
+
+	</div>
+
+{% endblock %}
