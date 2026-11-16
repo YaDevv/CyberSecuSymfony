@@ -132,3 +132,14 @@ Vérifiez ensuite que ces adresses répondent `404` : `/.env.local`, `/.git/HEAD
 
 | `/` | Page d'accueil (boutons selon le rôle) | Public |
 | `/profil` | Informations du compte et accès au changement de mot de passe | Utilisateur connecté |
+
+## Tests automatisés
+
+Les tests utilisent PHPUnit et les outils de test de Symfony. Ils tournent en environnement `test`, avec une base de données dédiée (fichier SQLite `var/test.db`, défini dans `.env.test`) qui est recréée avant chaque test : ils ne touchent jamais aux données du développement ni du serveur de test.
+
+```bash
+composer install                 # installe aussi PHPUnit (dépendances de développement)
+vendor/bin/phpunit                  # lance tous les tests
+vendor/bin/phpunit --testdox        # affiche le résultat sous forme lisible
+vendor/bin/phpunit --filter Environnement   # lance un seul groupe de tests
+```
