@@ -15,3 +15,8 @@
 /.vscode/
 *.log
 ###< perso ###
+
+###> phpunit ###
+/.phpunit.cache/
+/.phpunit.result.cache
+###< phpunit ###
